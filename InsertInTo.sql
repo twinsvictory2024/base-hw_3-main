@@ -1,4 +1,4 @@
--- Создание таблиц (без изменений)
+
 CREATE TABLE IF NOT EXISTS Artist (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS TrackCollections (
     PRIMARY KEY (track_id, collection_id)
 );
 
--- Вставка данных (без изменений)
+
 INSERT INTO Artist (name) VALUES 
 ('Eminem'),
 ('Jony'),
@@ -119,12 +119,12 @@ INSERT INTO ArtistGenre (artist_id, genre_id) VALUES
 (3, 1),
 (4, 3);
 
--- Исправленный запрос 1: Поиск точного слова "my"
+
 SELECT title
 FROM track
 WHERE title ~* '(^my[^a-z]|[^a-z]my[^a-z]|[^a-z]my$|^my$)';
 
--- Остальные запросы (без изменений)
+
 SELECT g.title AS genre_title, COUNT(DISTINCT ag.artist_id) AS artist_count
 FROM GenreList g
 LEFT JOIN ArtistGenre ag ON g.id = ag.genre_id
