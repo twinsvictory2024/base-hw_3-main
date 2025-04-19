@@ -1,155 +1,54 @@
-
-CREATE TABLE IF NOT EXISTS Artist (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS GenreList (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Album (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    year INTEGER NOT NULL CHECK(year > 1900)
-);
-
-CREATE TABLE IF NOT EXISTS Track (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    duration INTEGER NOT NULL CHECK(duration > 0),
-    album_id INTEGER REFERENCES Album(id)
-);
-
-CREATE TABLE IF NOT EXISTS Collections (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    year INTEGER NOT NULL CHECK(year > 1900)
-);
-
-CREATE TABLE IF NOT EXISTS ArtistGenre (
-    artist_id INTEGER REFERENCES Artist(id),
-    genre_id INTEGER REFERENCES GenreList(id),
-    PRIMARY KEY (artist_id, genre_id)
-);
-
-CREATE TABLE IF NOT EXISTS AlbumArtist (
-    album_id INTEGER REFERENCES Album(id),
-    artist_id INTEGER REFERENCES Artist(id),
-    PRIMARY KEY (album_id, artist_id)
-);
-
-CREATE TABLE IF NOT EXISTS TrackCollections (
-    track_id INTEGER REFERENCES Track(id),
-    collection_id INTEGER REFERENCES Collections(id),
-    PRIMARY KEY (track_id, collection_id)
-);
+INSERT INTO GenreList (title) VALUES 
+('Rock'), ('Pop'), ('Hip-Hop'), ('Electronic'), ('Classical');
 
 
 INSERT INTO Artist (name) VALUES 
-('Eminem'),
-('Jony'),
-('IceQube'),
-('Till lindemann');
+('The Weeknd'), ('Billie Eilish'), ('Eminem'), ('Hans Zimmer'), ('Daft Punk');
 
-INSERT INTO GenreList (title) VALUES 
-('Rock'),
-('HipHop'),
-('Classic');
 
 INSERT INTO Album (title, year) VALUES 
-('Millennium', 1999),
-('Back in Black', 1980),
-('CandyShop', 2013),
-('SunRise', 2019),
-('BigMa', 2018);
+('After Hours', 2020), 
+('When We All Fall Asleep', 2019), 
+('Music to Be Murdered By', 2020), 
+('Interstellar OST', 2014), 
+('Random Access Memories', 2013);
+
 
 INSERT INTO Track (title, duration, album_id) VALUES 
-('sound_1', 250, 1),
-('sound_2_my', 90, 1),
-('sound_my_3', 88, 2),
-('sound_4', 211, 3),
-('sound_5', 70, 2),
-('sound_6', 80, 1),
-('sound_7', 254, 5),
-('sound_my_my', 300, 4),
-('my own', 200, 1),
-('own my', 180, 2),
-('my', 150, 3),
-('oh my god', 220, 4),
-('myself', 190, 5),
-('by myself', 210, 1),
-('bemy self', 230, 2),
-('myself by', 240, 3),
-('by myself by', 250, 4),
-('beemy', 260, 5),
-('premyne', 270, 1);
+('Blinding Lights', 200, 1),
+('Save Your Tears', 215, 1),
+('bad guy', 194, 2),
+('everything i wanted', 244, 2),
+('Godzilla', 211, 3),
+('Darkness', 337, 3),
+('Cornfield Chase', 138, 4),
+('No Time for Caution', 456, 4),
+('Get Lucky', 369, 5),
+('Instant Crush', 337, 5),
+('My Universe', 228, 1),
+('My Strange Addiction', 179, 2),
+('Мой рок-н-ролл', 210, 3),
+('My Heart Will Go On', 280, 4);
 
-INSERT INTO Collections (title, year) VALUES 
-('Collect_1', 1999),
-('Collect_2', 2010),
-('Collect_3', 2020);
-
-INSERT INTO TrackCollections (track_id, collection_id) VALUES 
-(1, 1),
-(2, 2),
-(4, 3),
-(5, 2),
-(6, 1),
-(1, 2),
-(3, 3);
 
 INSERT INTO AlbumArtist (album_id, artist_id) VALUES 
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 2),
-(2, 1),
-(4, 3),
-(5, 4);
-
-INSERT INTO ArtistGenre (artist_id, genre_id) VALUES 
-(1, 2),
-(2, 1),
-(2, 2),
-(3, 2),
-(4, 1),
-(1, 1),
-(3, 1),
-(4, 3);
+(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (1, 2), (3, 1);
 
 
-SELECT title
-FROM track
-WHERE title ~* '(^my[^a-z]|[^a-z]my[^a-z]|[^a-z]my$|^my$)';
+INSERT INTO GenreListAlbum (album_id, genrelist_id) VALUES 
+(1, 2), (1, 3), (2, 2), (2, 4), (3, 3), (4, 5), (5, 4), (5, 2);
 
 
-SELECT g.title AS genre_title, COUNT(DISTINCT ag.artist_id) AS artist_count
-FROM GenreList g
-LEFT JOIN ArtistGenre ag ON g.id = ag.genre_id
-GROUP BY g.title;
+INSERT INTO Collections (title, year) VALUES 
+('Best of 2020', 2020),
+('Pop Hits', 2019),
+('Hip-Hop Collection', 2020),
+('Film Music', 2018),
+('Electronic Mix', 2019),
+('My Favorite Tracks', 2021);
 
-SELECT COUNT(t.id) 
-FROM Track t
-JOIN Album al ON t.album_id = al.id
-WHERE al.year BETWEEN 2019 AND 2020;
 
-SELECT a.name
-FROM Artist a
-WHERE a.name NOT IN (
-    SELECT DISTINCT a.name
-    FROM Artist a
-    JOIN AlbumArtist aa ON a.id = aa.artist_id
-    JOIN Album al ON aa.album_id = al.id
-    WHERE al.year = 2020
-);
-
-SELECT DISTINCT c.title
-FROM Collections c
-JOIN TrackCollections tc ON c.id = tc.collection_id
-JOIN Track t ON tc.track_id = t.id
-JOIN Album a ON t.album_id = a.id
-JOIN AlbumArtist aa ON a.id = aa.album_id
-JOIN Artist art ON aa.artist_id = art.id
-WHERE art.name = '
+INSERT INTO TrackCollections (track_id, collection_id) VALUES 
+(1, 1), (2, 1), (3, 2), (4, 2), (5, 3), (6, 3),
+(7, 4), (8, 4), (9, 5), (10, 5), (11, 6), (12, 6),
+(13, 6), (14, 6), (1, 6), (3, 6);
