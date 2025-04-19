@@ -1,20 +1,24 @@
-select title, duration
-from track
-order by duration desc 
-limit 1;
+SELECT title, duration 
+FROM Track 
+ORDER BY duration DESC 
+LIMIT 1;
 
-select title
-from track
-where duration >= 210;
 
-select title
-from collections c 
-where year between 2018 and 2020;
+SELECT title 
+FROM Track 
+WHERE duration >= 210;
 
-select name
-from artist a 
-where name not like '% %';
 
-select title
-from track t 
-where title like '%my%' or title like '%мой%';
+SELECT title 
+FROM Collections 
+WHERE year BETWEEN 2018 AND 2020;
+
+
+SELECT name 
+FROM Artist 
+WHERE name NOT LIKE '% %';
+
+
+SELECT title 
+FROM Track 
+WHERE title ~* '\m(my|мой)\M';
