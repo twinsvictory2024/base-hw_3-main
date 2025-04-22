@@ -1,7 +1,6 @@
-SELECT g.title, COUNT(DISTINCT aa.artist_id) AS artist_count
+SELECT g.title, COUNT(DISTINCT ga.artist_id) AS artist_count
 FROM GenreList g
-JOIN GenreListAlbum ga ON g.id = ga.genrelist_id
-JOIN AlbumArtist aa ON ga.album_id = aa.album_id
+JOIN GenreListArtist ga ON g.id = ga.genrelist_id
 GROUP BY g.title;
 
 
