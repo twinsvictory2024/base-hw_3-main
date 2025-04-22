@@ -32,11 +32,11 @@ create table if not exists AlbumArtist (
 	foreign key (artist_id) references Artist(id)
 );
 
-create table if not exists GenreListAlbum (
+create table if not exists GenreListArtist (
 	id SERIAL primary key,
-	album_id INT,
+	artist_id INT,
 	genrelist_id INT,
-	foreign key (album_id) references Album(id),
+	foreign key (artist_id) references Artist(id),
 	foreign key (genrelist_id) references GenreList(id)
 );
 
