@@ -35,7 +35,7 @@ INSERT INTO AlbumArtist (album_id, artist_id) VALUES
 (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (1, 2), (3, 1);
 
 
-INSERT INTO GenreListAlbum (album_id, genrelist_id) VALUES 
+INSERT INTO GenreListArtist (artist_id, genrelist_id) VALUES 
 (1, 2), (1, 3), (2, 2), (2, 4), (3, 3), (4, 5), (5, 4), (5, 2);
 
 
