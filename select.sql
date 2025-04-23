@@ -20,5 +20,5 @@ WHERE name NOT LIKE '% %';
 
 
 SELECT title 
-FROM Track 
-WHERE title ~* /(^|.*)\b(my|мой)\b(.*|$)/;
+FROM Track
+WHERE title ~* '(^|\s)(my|мой)(\s|$)';
